@@ -34,3 +34,4 @@ http://localhost:5000/api/docs
 * Somethings to consider when scaling this application:
     1. There should be an LFU cache with a set expiration time so that we do not have to repeatedly get the data from our redis instance
     2. There should also be a small set of pregenerated shortedURL that can be used so that we dont have to spend time generating a shortened url when /generateShortURL request is recieved.
+    3. URLs have created date as a field, periodically the database should remove old records as a background task (the meaning of "old" is subject to requirements of the application) 
