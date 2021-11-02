@@ -1,0 +1,159 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "TinyURL api",
+      "description": "An API to return a shortened URL"
+    },
+    "paths": {
+      "/ping": {
+        "get": {
+          "description": "check enpoint is live",
+          "responses": {
+            "200": {
+              "description": "Returns 200 when api is live"
+            }
+          }
+        }
+      },
+      "/generateShortURL": {
+        "get": {
+          "description": "Takes in long url and returns a shortened url",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "inputURL",
+              "required": true,
+              "description": "input long url",
+              "schema": {
+                "type": "string",
+                "example": "www.facebook.com"
+              }
+            },
+            {
+              "in": "query",
+              "name": "username",
+              "required": true,
+              "description": "input long url",
+              "schema": {
+                "type": "string",
+                "example": "natasha"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Returns valid shortened url",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "type": "string",
+                    "example": "tiny.com/123"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Long url already exists"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/getLongURL": {
+        "get": {
+          "description": "Takes in short url and returns a long url",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "shortURL",
+              "required": true,
+              "description": "input long url",
+              "schema": {
+                "type": "string",
+                "example": "tiny.com/123"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Returns corresponding long",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "type": "string",
+                    "example": "www.facebook.com"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "shortURL not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/getUsage": {
+        "get": {
+          "description": "Takes in short url and returns meta data associated with it",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "shortURL",
+              "required": true,
+              "description": "input long url",
+              "schema": {
+                "type": "string",
+                "example": "tiny.com/123"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Returns corresponding long",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Response"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "shortURL not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Response": {
+          "type": "object",
+          "properties": {
+            "long_url": {
+              "type": "string"
+            },
+            "created_by": {
+              "type": "string"
+            },
+            "created_datetime": {
+              "type": "string"
+            },
+            "used_count": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+  
